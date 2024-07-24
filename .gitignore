@@ -1,0 +1,14 @@
+.idea/
+
+CoreEntities/bin/
+CoreEntities/obj/
+
+CoreModels/bin/
+CoreModels/obj/
+
+SchoolManagement/bin/
+SchoolManagement/obj/
+
+Utilities/bin/
+Utilities/obj/
+
