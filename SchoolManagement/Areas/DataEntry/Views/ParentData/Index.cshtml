@@ -1,0 +1,61 @@
+﻿@using Utilities
+@model IEnumerable<CoreEntities.SchoolMgntModel.Parents>
+
+
+<p>
+    <a class="btn btn-primary"
+       asp-area="@ViewContext.RouteData.Values["area"]"
+       asp-controller="@ViewContext.RouteData.Values["controller"]"
+       asp-action="Create"
+       data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Thêm">
+        <i class="anticon anticon-plus-circle"></i>
+    </a>
+</p>
+
+<table class="table" id="data-table">
+    <thead class="table-primary">
+    <tr>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>PhoneNumber</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Birthday</th>
+
+        <th class="text-center col-2">
+            <i class="anticon anticon-tool"></i>Tools
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr class="@(!item.IsActive ? "table-danger" : "")">
+            <div id="DivFilterResult">
+                <th>
+                    <a>@item.FirstName</a>
+                </th>
+                <th>@item.LastName</th>
+                <th>@item.PhoneNumber</th>
+                <th>@item.Address</th>
+                <th>@item.Email</th>
+                <th>@item.Email</th>
+                <th>
+                    @if (item.Gender)
+                    {
+                        <span>Nam</span>
+                    }
+                    else
+                    {
+                        <span>Nữ</span>
+                    }
+                </th>
+                <th>@item.BirthDay.ToString(Helper.FormatDateTime.OnlyDate)</th>
+            </div>
+            @await Html.PartialAsync(Helper.StaticUrl.Button, item, null)
+        </tr>
+    }
+    </tbody>
+</table>

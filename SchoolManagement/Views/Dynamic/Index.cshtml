@@ -1,0 +1,68 @@
+﻿@using System.Reflection
+@using Utilities
+@using System.ComponentModel
+@model dynamic
+
+@{
+    PropertyInfo[] properties = ViewBag.CurrentType;
+
+    Layout = "~/Areas/Identity/Views/Shared/_Layouts.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="m-t-25">
+            <p>
+                @await Html.PartialAsync(Helper.StaticUrl.ButtonChild.ButtonCreate, Model, null)
+            </p>
+            
+            <table id="data-table" class="table">
+                <thead>
+                <tr>
+                    @{
+                        foreach (var property in properties.Where(x => !ViewBag.NonAccessAtributeInIndex.Contains(x.Name)))
+                        {
+                            <th>
+                                @(property.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? property.Name)
+                            </th>
+                        }
+                    }
+                    <th class="text-center col-2">
+                        <i class="anticon anticon-tool"></i>Tools
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="@(!item.IsActive ? "table-danger" : "")">
+                        @{
+                            properties = item.GetType().GetProperties();
+                            foreach (var property in properties.Where(x => !ViewBag.NonAccessAtributeInIndex.Contains(x.Name)))
+                                if (property.GetValue(item) is DateTime)
+                                {
+                                    <th>
+                                        @property.GetValue(item).ToString(Helper.FormatDateTime.OnlyDate)
+                                    </th>
+                                }
+                                else
+                                {
+                                    <th>
+                                        @property.GetValue(item)
+                                    </th>
+                                }
+                        }
+
+                        @await Html.PartialAsync(Helper.StaticUrl.Button, item, null)
+                        
+
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

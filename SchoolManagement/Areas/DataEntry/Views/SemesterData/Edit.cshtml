@@ -1,0 +1,31 @@
+﻿@model CoreEntities.SchoolMgntModel.Semester
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<input asp-for="Id" hidden>
+<input asp-for="IsActive" hidden/>
+<input asp-for="CreatedBy" hidden/>
+<input asp-for="CreatedAt" hidden/>
+<input asp-for="UpdatedBy" hidden/>
+<input asp-for="UpdatedAt" hidden/>
+
+<div class="form-group">
+    <label asp-for="NameSemester" class="control-label"></label>
+    <input asp-for="NameSemester" class="form-control"/>
+    <span asp-validation-for="NameSemester" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="StartIn" class="control-label"></label>
+    <input asp-for="StartIn" class="form-control"/>
+    <span asp-validation-for="StartIn" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="EndIn" class="control-label"></label>
+    <input asp-for="EndIn" class="form-control"/>
+    <span asp-validation-for="EndIn" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="ExamWeek" class="control-label"></label>
+    <input asp-for="ExamWeek" class="form-control"/>
+    <span asp-validation-for="ExamWeek" class="text-danger"></span>
+</div>

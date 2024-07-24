@@ -1,0 +1,40 @@
+﻿@model IEnumerable<CoreEntities.SchoolMgntModel.ScheduleTime>
+
+<div class="card">
+    <div class="card-body">
+        <div class="m-t-25">
+            <p>
+                @await Html.PartialAsync(Helper.StaticUrl.ButtonChild.ButtonCreate, Model, null)
+            </p>
+
+            <table id="data-table" class="table">
+                <thead>
+                <tr>
+                    <th>Tiết học</th>
+                    <th>Bắt đầu</th>
+                    <th>Kết thúc</th>
+         
+                    <th class="text-center col-2">
+                        <i class="anticon anticon-tool"></i>Tools
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th>@item.LessonName</th>
+                        <th>@item.StartTime</th>
+                        <th>@item.EndTime</th>
+                        @await Html.PartialAsync(Helper.StaticUrl.Button, item, null)
+
+
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

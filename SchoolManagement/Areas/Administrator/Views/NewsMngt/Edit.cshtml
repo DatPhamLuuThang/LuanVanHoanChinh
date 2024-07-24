@@ -1,0 +1,43 @@
+﻿@model CoreEntities.SchoolMgntModel.News
+
+@{
+    ViewData["Title"] = "Thêm tin tức, hình ảnh";
+    Layout = "_Layout";
+}
+
+<form asp-action="Edit" enctype="multipart/form-data">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input asp-for="Id" hidden>
+    <input asp-for="IsActive" hidden/>
+    <input asp-for="CreatedBy" hidden/>
+    <input asp-for="CreatedAt" hidden/>
+    <input asp-for="UpdatedBy" hidden/>
+    <input asp-for="UpdatedAt" hidden/>
+
+    <div class="form-group">
+        <label asp-for="Noty" class="control-label"></label>
+        <input asp-for="Noty" class="form-control"/>
+        <span asp-validation-for="Noty" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewsSchool" class="control-label"></label>
+        <input asp-for="NewsSchool" class="form-control"/>
+        <span asp-validation-for="NewsSchool" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ImgSchoolFile" class="control-label"></label>
+        <input asp-for="ImgSchoolFile" name="ImgSchoolFile" type="file" class="form-control-file"/>
+        <span asp-validation-for="ImgSchoolFile" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
+    
+    <a type="button" class="btn btn-secondary"
+       asp-area="@ViewContext.RouteData.Values["area"]"
+       asp-controller="@ViewContext.RouteData.Values["controller"]"
+       asp-action="Index">
+        <i class="@Helper.FormatButton.Cancel.Icon"></i> @Helper.FormatButton.Cancel.Title
+    </a>
+</form>

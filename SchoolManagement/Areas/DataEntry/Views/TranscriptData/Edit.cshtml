@@ -1,0 +1,52 @@
+@model CoreEntities.SchoolMgntModel.Transcript
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<input asp-for="Id" hidden>
+<input asp-for="IsActive" hidden/>
+<input asp-for="CreatedBy" hidden/>
+<input asp-for="CreatedAt" hidden/>
+<input asp-for="UpdatedBy" hidden/>
+<input asp-for="UpdatedAt" hidden/>
+
+<div class="form-group">
+    <label asp-for="Month" class="control-label"></label>
+    <input asp-for="Month" class="form-control"/>
+    <span asp-validation-for="Month" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="TypeId" class="control-label">Loại điểm</label>
+    <select asp-for="TypeId" class="form-control">
+        <option value="0">Trả bài</option>
+        <option value="1">Kiểm tra 15 phút</option>
+        <option value="2">Kiểm tra 1 tiết</option>
+        <option value="3">Thi cuối kì</option>
+    </select>
+    <span asp-validation-for="TypeId" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Value" class="control-label"></label>
+    <input asp-for="Value" class="form-control"/>
+    <span asp-validation-for="Value" class="text-danger"></span>
+</div>
+
+
+<div class="form-group">
+    <label asp-for="StudentId" class="control-label"></label>
+    <select asp-for="StudentId" class="form-control" asp-items="ViewBag.StudentId">
+        <option value="@Guid.Empty" selected>NULL</option>
+    </select>
+</div>
+<div class="form-group">
+    <label asp-for="SubjectId" class="control-label"></label>
+    <select asp-for="SubjectId" class="form-control" asp-items="ViewBag.SubjectId">
+        <option value="@Guid.Empty" selected>NULL</option>
+    </select>
+</div>
+<div class="form-group">
+    <label asp-for="SemesterId" class="control-label"></label>
+    <select asp-for="SemesterId" class="form-control" asp-items="ViewBag.SemesterId">
+        <option value="@Guid.Empty" selected>NULL</option>
+    </select>
+</div>
+
+

@@ -1,0 +1,107 @@
+﻿@using Utilities
+@model List<CoreEntities.SchoolMgntModel.Schedule>
+
+@{
+    ViewBag.Title = "Thời Khóa Biểu";
+    Layout = "~/Views/Shared/_Layouts.cshtml";
+}
+<section class="scroll-section" id="headAndFoot">
+    <div class="card mb-5">
+        <div class="card-body">
+
+            @if (Model.Any())
+            {
+                var groupedSchedules = Model.GroupBy(s => s.Day.Date);
+
+                foreach (var group in groupedSchedules)
+                {
+                    <h3 class="text-center text-primary">Thời khóa biểu ngày @group.Key.ToString(Helper.FormatDateTime.OnlyDate)</h3>
+                    <table class="table">
+                        <thead class="table-light">
+                        <tr>
+                            <th scope="col">Tiết Học</th>
+                            <th scope="col">Giờ</th>
+                            <th scope="col">Môn Học</th>
+                            <th scope="col">Giáo viên</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var schedule in group.OrderBy(x=>x.ScheduleTime!.LessonName))
+                        {
+                            <tr>
+                                <td>@schedule.ScheduleTime!.LessonName</td>
+                                <td>@schedule.ScheduleTime.StartTime - @schedule.ScheduleTime.EndTime</td>
+                                <td>@schedule.Subject!.NameSubject</td>
+                                <td>
+                                    @if (schedule.Subject.Teacher != null)
+                                    {
+                                        @schedule.Subject.Teacher.LastName
+                                    }
+                                    else
+                                    {
+                                        <span>N/A</span>
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+                    </table>
+                }
+            }
+            else
+            {
+                <p>Không có thông tin thời khóa biểu.</p>
+            }
+        </div>
+    </div>
+</section>
+
+
+@* <div class="container"> *@
+@*     <h2 class="text-center">Thời Khóa Biểu</h2> *@
+@* *@
+@*     @if (Model.Any()) *@
+@*     { *@
+@*         var groupedSchedules = Model.GroupBy(s => s.Day.Date); *@
+@* *@
+@*         foreach (var group in groupedSchedules) *@
+@*         { *@
+@*             <h3>Thời khóa biểu ngày @group.Key.ToShortDateString()</h3> *@
+@* *@
+@*             <table class="table"> *@
+@*                 <thead> *@
+@*                 <tr> *@
+@*                     <th>Tiết Học</th> *@
+@*                     <th>Giờ</th> *@
+@*                     <th>Môn Học</th> *@
+@*                     <th>Giáo viên</th> *@
+@*                 </tr> *@
+@*                 </thead> *@
+@*                 <tbody> *@
+@*                 @foreach (var schedule in group) *@
+@*                 { *@
+@*                     <tr> *@
+@*                         <td>@schedule.ScheduleTime!.LessonName</td> *@
+@*                         <td>@schedule.ScheduleTime.StartTime - @schedule.ScheduleTime.EndTime</td> *@
+@*                         <td>@schedule.Subject!.NameSubject</td> *@
+@*                         <td> *@
+@*                             @if (schedule.Subject.Teacher != null) *@
+@*                             { *@
+@*                                 @schedule.Subject.Teacher.LastName *@
+@*                             } *@
+@*                             else *@
+@*                             { *@
+@*                                 <span>N/A</span> *@
+@*                             } *@
+@*                         </td> *@
+@*                     </tr> *@
+@*                 } *@
+@*                 </tbody> *@
+@*             </table> *@
+@*         } *@
+@*     } *@
+@*     else *@
+@*     { *@
+@*         <p>Không có thông tin thời khóa biểu.</p> *@
+@*     } *@
+@* </div> *@

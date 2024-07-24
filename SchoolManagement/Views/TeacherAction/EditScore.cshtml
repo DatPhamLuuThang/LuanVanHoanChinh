@@ -1,0 +1,28 @@
+﻿@model TranscriptEditRequestModel
+
+@{
+    ViewBag.Title = "Chỉnh Sửa Điểm";
+    Layout = "~/Views/Shared/_Layouts.cshtml";
+}
+
+@* <h2 class="text-center">Chỉnh Sửa Điểm - @Model.Student.FirstName @Model.Student.LastName</h2> *@
+
+<form asp-controller="TeacherAction" asp-area="" asp-action="EditScore">
+
+    <div class="form-group">
+        <label asp-for="newValue" class="control-label">Điểm chỉnh sửa </label>
+        <input asp-for="newValue" class="form-control" />
+        <span asp-validation-for="newValue" class="text-danger"></span>
+    </div>
+
+    <!-- Danh sách điểm hiện tại của loại điểm được chọn -->
+    <div class="form-group">
+        <label class="control-label">Điểm cần chỉnh sửa</label>
+        <select asp-for="TranId" asp-items="ViewBag.ScoreSlect" class="form-control">
+            <!-- Hiển thị danh sách điểm hiện tại -->
+        </select>
+        <span class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu Chỉnh Sửa</button>
+</form>

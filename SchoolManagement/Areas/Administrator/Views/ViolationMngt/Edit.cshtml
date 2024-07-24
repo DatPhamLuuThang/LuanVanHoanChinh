@@ -1,0 +1,34 @@
+@model CoreEntities.SchoolMgntModel.Violation
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<input asp-for="Id" hidden>
+<input asp-for="IsActive" hidden/>
+<input asp-for="CreatedBy" hidden/>
+<input asp-for="CreatedAt" hidden/>
+<input asp-for="UpdatedBy" hidden/>
+<input asp-for="UpdatedAt" hidden/>
+
+<div class="form-group">
+    <label asp-for="DayOfViolate" class="control-label"></label>
+    <input asp-for="DayOfViolate" class="form-control"/>
+    <span asp-validation-for="DayOfViolate" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="NumberOfViolate" class="control-label"></label>
+    <input asp-for="NumberOfViolate" class="form-control"/>
+    <span asp-validation-for="NumberOfViolate" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Violate" class="control-label"></label>
+    <input asp-for="Violate" class="form-control"/>
+    <span asp-validation-for="Violate" class="text-danger"></span>
+</div>
+
+
+<div class="form-group">
+    <label asp-for="StudentId" class="control-label"></label>
+    <select asp-for="StudentId" class="form-control" asp-items="ViewBag.StudentId">
+        <option value="@Guid.Empty" selected>NULL</option>
+    </select>
+</div>
+

@@ -1,0 +1,74 @@
+﻿@model CoreEntities.SchoolMgntModel.Student
+
+@{
+    ViewBag.Title = "Chỉnh sửa thông tin cá học sinh";
+    Layout = "~/Views/Shared/_Layouts.cshtml";
+}
+
+
+
+<div class="row">
+    <h2 class="small-title"></h2>
+    <div class="card mb-5">
+        <div class="card-body">
+            <form asp-action="EditInfoStudent" asp-area="" asp-controller="TeacherAction">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Id" hidden>
+                <input asp-for="IsActive" hidden/>
+                <input asp-for="CreatedBy" hidden/>
+                <input asp-for="CreatedAt" hidden/>
+                <input asp-for="UpdatedBy" hidden/>
+                <input asp-for="UpdatedAt" hidden/>
+     
+                <input asp-for="Gender" hidden/>
+                <input asp-for="Email" hidden/>
+                <input asp-for="ClassRoomId" hidden/>
+
+
+                <div class="mb-3 row">
+                    <label for="firstName" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Họ học sinh</label>
+                    <div class="col-sm-8 col-md-9 col-lg-10">
+                        <input asp-for="FirstName" type="text" class="form-control" id="firstName" name="firstName">
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="lastName" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Tên học sinh</label>
+                    <div class="col-sm-8 col-md-9 col-lg-10">
+                        <input asp-for="LastName" type="text" class="form-control" id="lastName" name="lastName">
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="address" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Địa chỉ</label>
+                    <div class="col-sm-8 col-md-9 col-lg-10">
+                        <input asp-for="Address" type="text" class="form-control" id="address" name="address">
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="phoneNumber" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Số điện thoại</label>
+                    <div class="col-sm-8 col-md-9 col-lg-10">
+                        <input asp-for="PhoneNumber" type="text" class="form-control" id="phoneNumber" name="phoneNumber">
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label for="birthday" class="col-lg-2 col-md-3 col-sm-4 col-form-label">Sinh nhật</label>
+                    <div class="col-sm-8 col-md-9 col-lg-10">
+                        <input asp-for="BirthDay" type="date" class="form-control date-picker-close" id="birthday" name="birthday">
+                        <span asp-validation-for="BirthDay" class="text-danger"></span>
+                    </div>
+                </div>
+                
+
+                <div class="mb-3 row mt-5">
+                    <div class="col-sm-8 col-md-9 col-lg-10 ms-auto">
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿@model List<CoreEntities.SchoolMgntModel.Violation>
+
+@{
+    ViewBag.Title = "Danh Sách Vi Phạm";
+    Layout = "~/Views/Shared/_Layouts.cshtml";
+}
+
+<div class="container">
+    <h2>Danh Sách Vi Phạm</h2>
+    
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Ngày Vi Phạm</th>
+                <th>Lỗi Vi Phạm</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var violation in Model)
+            {
+                <tr>
+                    <td>@violation.DayOfViolate?.ToShortDateString()</td>
+                    <td>@violation.Violate</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Không có vi phạm nào trong tháng này.</p>
+    }
+</div>

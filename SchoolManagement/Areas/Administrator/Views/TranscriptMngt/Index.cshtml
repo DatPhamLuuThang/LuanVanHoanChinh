@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CoreEntities.SchoolMgntModel.Transcript>
+
+<div class="card">
+    <div class="card-body">
+        <div class="m-t-25">
+            <p>
+                @await Html.PartialAsync(Helper.StaticUrl.ButtonChild.ButtonCreate, Model, null)
+            </p>
+
+            <table id="data-table" class="table">
+                <thead>
+                <tr>
+                    <th>Học sinh</th>
+                    <th>Môn học</th>
+                    <th>Tháng</th>
+                    <th>Loại điểm</th>
+                    <th>Điểm</th>
+                    
+                    <th>Học kì</th>
+                    <th class="text-center col-2">
+                        <i class="anticon anticon-tool"></i>Tools
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="@(!item.IsActive ? "table-danger" : "")">
+                        <th>@item.Student?.FirstName @item.Student?.LastName</th>
+                        <th>@item.Subject?.NameSubject</th>
+                        
+                        <th>@item.Month</th>
+                        <th>@item.TypeId</th>
+                        <th>@item.Value</th>
+      
+                        
+                        <th>@item.Semester?.NameSemester</th>
+                        @await Html.PartialAsync(Helper.StaticUrl.Button, item, null)
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

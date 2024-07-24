@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CoreEntities.SchoolMgntModel.Student>
+
+<div class="card">
+    <div class="card-body">
+        <div class="m-t-25">
+            <p>
+                @await Html.PartialAsync(Helper.StaticUrl.ButtonChild.ButtonCreate, Model, null)
+            </p>
+
+            <table id="data-table" class="table">
+                <thead>
+                <tr>
+                    <th>Lớp</th>
+                    <th>Họ và tên</th>
+                    <th>Giới tính</th>
+                    <th>Ngày sinh</th>
+                    <th class="text-center col-2">
+                        <i class="anticon anticon-tool"></i>Tools
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="@(!item.IsActive ? "table-danger" : "")">
+                        <th>@item.ClassRoom?.ClassName</th>
+                        <th>@item.FirstName @item.LastName</th>
+                        <th>
+                            @if (item.Gender)
+                            {
+                                <span>Nam</span>
+                            }
+                            else
+                            {
+                                <span>Nữ</span>
+                            }
+                        </th>
+
+                        <th>@item.BirthDay.ToString(Helper.FormatDateTime.OnlyDate)</th>
+
+                        @await Html.PartialAsync(Helper.StaticUrl.Button, item, null)
+
+
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+﻿@using Utilities
+@model SchoolManagement.Models.CreateUserRole
+
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <form asp-area="Identity" asp-controller="Auth" asp-action="AddUserRole">
+            <input asp-for="IdUser" hidden/>
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalCenterTitle">Thêm quyền cho: </h5>
+
+                <h5>&nbsp;@ViewBag.name</h5>
+
+                <button type="button" class="close" data-dismiss="modal">
+
+                    <i class="anticon anticon-close"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group col-md-12">
+                    <label for="inputState">Danh sách quyền </label>
+                    <select id="inputState" class="form-control" asp-for="IdRole" asp-items="@ViewBag.lsRole">
+                        <option value="0" disabled selected>Chọn quyền cho tài khoản </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                    <i class="anticon anticon-check-circle"></i> Xác nhận
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="@Helper.FormatButton.Close.Icon"></i> @Helper.FormatButton.Close.Title
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

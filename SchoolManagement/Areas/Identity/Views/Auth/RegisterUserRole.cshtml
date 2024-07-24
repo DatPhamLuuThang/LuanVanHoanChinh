@@ -1,0 +1,52 @@
+﻿@model SchoolManagement.Areas.Identity.Models.RegisterUserRoleViewModel
+
+@{
+    ViewData["Title"] = ViewContext.RouteData.Values["action"];
+    Layout = "~/Areas/Identity/Views/Shared/_Layouts.cshtml";
+}
+
+
+<div class="card">
+
+    <div class="card-body">
+        <h4>
+            @ViewData["Title"]
+        </h4>
+
+        <div class="m-t-25">
+            <form asp-action=@ViewContext.RouteData.Values["action"]
+                  asp-controller=@ViewContext.RouteData.Values["controller"]
+                  asp-area=@ViewContext.RouteData.Values["area"]>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="modal-body">
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Chọn tài khoản </label>
+                        <select id="inputState" class="form-control" asp-for="UserId" asp-items="@ViewBag.lsUser">
+                            <option value="0" disabled selected>Chọn tài khoản</option>
+                        </select>
+                    </div>
+              
+                
+                
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Chọn quyền </label>
+                        <select id="inputState" class="form-control" asp-for="RoleId" asp-items="@ViewBag.lsRole">
+                            <option value="0" disabled selected>Chọn quyền</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-tone">
+                        <i class="anticon anticon-plus-circle m-r-5"></i>@ViewContext.RouteData.Values["action"]
+                    </button>
+                    <a asp-action="Dashboard" asp-controller=@ViewContext.RouteData.Values["controller"] asp-area=@ViewContext.RouteData.Values["area"] class="btn btn-secondary btn-tone" data-toggle="tooltip" data-placement="top" title="Click to back">
+                        <i class="anticon anticon-undo m-r-5"></i>Trở về
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Content Wrapper END -->

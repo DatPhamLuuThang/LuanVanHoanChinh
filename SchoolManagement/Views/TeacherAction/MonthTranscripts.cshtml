@@ -1,0 +1,63 @@
+﻿@model List<StudentAverageDTO>
+
+@{
+    ViewBag.Title = "Bảng Thống Kê Điểm Tổng Kết";
+    Layout = "~/Views/Shared/_Layouts.cshtml";
+}
+
+@{
+    var classroomId = ViewBag.ClassroomId;
+    var selectedMonth = ViewBag.SelectedMonth;
+}
+
+<h1 class="text-center">Bảng Thống Kê Điểm Tổng Kết <br/> Tháng @selectedMonth</h1>
+
+<!-- Hiển thị nút chọn tháng -->
+<div class="text-center mb-3">
+    <!-- Sử dụng Url.Action để tạo liên kết đến ViewMonthsInSemester và truyền classroomId -->
+    <a href="@Url.Action("ViewMonthsInSemester", new { classroomId = classroomId })" class="btn btn-primary">Chọn tháng</a>
+</div>
+
+@if (Model.Any())
+{
+    <table
+        class="data-table data-table-pagination data-table-standard responsive nowrap hover"
+        id="datatableHover"
+        data-order='[[ 0, "desc" ]]'>
+        <thead>
+        <tr>
+            <th class="text-muted text-small text-uppercase">Học sinh</th>
+            @foreach (var subject in Model.First().SubjectAverages)
+            {
+                <th class="text-muted text-small text-uppercase">@subject.Item1</th>
+            }
+            <th class="text-muted text-small text-uppercase">Tổng điểm trung bình tháng</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var studentAverage in Model)
+        {
+            <tr>
+                <td>@studentAverage.StudentName</td>
+
+                @foreach (var subject in studentAverage.SubjectAverages)
+                {
+                    <td> @Math.Round(subject.Item2 ?? 0, 2)</td>
+                }
+
+                <td class="text-center">
+                    @{
+                        decimal? totalScore = (decimal?)studentAverage.SubjectAverages.Sum(s => s.Item2);
+                        decimal? averageScore = totalScore / studentAverage.SubjectAverages.Count;
+                    }
+                    @Math.Round(averageScore ?? 0, 2)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-center">Không có dữ liệu điểm tháng @selectedMonth của lớp.</p>
+}

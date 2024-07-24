@@ -1,0 +1,39 @@
+﻿@model CoreEntities.SchoolMgntModel.Transcript
+
+@{
+    ViewBag.Title = "Thêm Điểm Số";
+    Layout = "~/Views/Shared/_Layouts.cshtml";
+}
+
+<h1>Thêm Điểm Số cho @ViewBag.Student.FirstName @ViewBag.Student.LastName - @ViewBag.Subject.NameSubject</h1>
+
+<form asp-controller="TeacherAction" asp-action="AddScore">
+    <input type="hidden" asp-for="StudentId" value="@ViewBag.Student.Id"/>
+    <input type="hidden" asp-for="SubjectId" value="@ViewBag.Subject.Id"/>
+    <input type="hidden" asp-for="SemesterId" value="@ViewBag.Semester.Id"/>
+
+    
+    
+    <div class="form-group">
+        <label asp-for="TypeId" class="control-label">Loại điểm</label>
+        <select asp-for="TypeId" class="form-control">
+            <option value="1">Trả bài</option>
+            <option value="2">Kiểm tra 15 phút</option>
+            <option value="3">Kiểm tra 1 tiết</option>
+            @if (ViewBag.InputTime)
+            {
+                <option value="4">Thi cuối kì</option>
+            }
+        </select>
+        <span asp-validation-for="TypeId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Value" class="control-label">Điểm số</label>
+        <input asp-for="Value" max="10" class="form-control"/>
+        <span asp-validation-for="Value" class="text-danger"></span>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Lưu Điểm Số</button>
+</form>

@@ -1,0 +1,13 @@
+@using Utilities
+@model dynamic
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailsModal_@Model.Id">
+      <i class="@Helper.FormatButton.Details.Icon" data-toggle="tooltip" data-placement="top" title="@Helper.FormatButton.Details.Title"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="detailsModal_@Model.Id">
+    @await Html.PartialAsync(Helper.StaticUrl.Details,Model, null)
+</div>
+<!-- Modal End-->

@@ -1,0 +1,15 @@
+@using Utilities
+@model dynamic
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal_@Model.Id">
+      <i class="@Helper.FormatButton.Delete.Icon" data-toggle="tooltip" data-placement="top" title="@Helper.FormatButton.Delete.Title"></i>
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal_@Model.Id">
+      @await Html.PartialAsync(Helper.StaticUrl.Delete, Model.Id.ToString(), null)
+</div>
+<!-- Modal End-->
+

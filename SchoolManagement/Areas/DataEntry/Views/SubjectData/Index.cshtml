@@ -1,0 +1,39 @@
+﻿@using Utilities
+@model IEnumerable<CoreEntities.SchoolMgntModel.Subject>
+
+<div class="card">
+    <div class="card-body">
+        <div class="m-t-25">
+            <p>
+                @await Html.PartialAsync(Helper.StaticUrl.ButtonChild.ButtonCreate, Model, null)
+            </p>
+
+            <table id="data-table" class="table">
+                <thead>
+                <tr>
+                    <th>Môn học</th>
+                    <th>Giáo viên phụ trách</th>
+
+                    <th class="text-center col-2">
+                        <i class="anticon anticon-tool"></i>Tools
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="@(!item.IsActive ? "table-danger" : "")">
+                        <th>@item.NameSubject</th>
+                        <th>@item.Teacher?.FirstName @item.Teacher?.LastName</th>
+                        @await Html.PartialAsync(Helper.StaticUrl.Button, item, null)
+
+
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

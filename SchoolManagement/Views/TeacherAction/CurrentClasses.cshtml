@@ -1,0 +1,37 @@
+﻿@model List<CoreEntities.SchoolMgntModel.Schedule>
+
+@{
+    ViewBag.Title = "Các Lớp Đang Dạy";
+    Layout = "~/Views/Shared/_Layouts.cshtml";
+}
+@{
+    var currentMonth = DateTime.Now.Month;
+    var currentYear = DateTime.Now.Year;
+}
+
+<h2 class="text-center">Danh Sách Lớp đang dạy trong tháng <br/><b>@currentMonth năm @currentYear</b> </h2>
+
+
+<div class="text-center">
+    <h3>Thông Tin Giáo Viên</h3>
+    <p>Tên giáo viên: @Model.FirstOrDefault()?.Subject?.Teacher?.FirstName @Model.FirstOrDefault()?.Subject?.Teacher?.LastName</p>
+</div>
+
+@if (Model.Any())
+{
+    foreach (var schedule in Model)
+    {
+        <div class="text-center">
+            <h4>Lớp: @schedule.ClassRoom?.ClassName</h4>
+            <a  asp-controller="TeacherAction" asp-action="ClassStudents" asp-route-classRoomId="@schedule.ClassRoomId" asp-route-subjectId="@schedule.SubjectId">
+                <button class="btn btn-primary text-center">Xem Danh Sách Học Sinh Lớp: @schedule.ClassRoom?.ClassName</button>
+            </a>
+        </div>
+        <br/>
+        <br/>
+    }
+}
+else
+{
+    <h4 class="text-center">Không có lớp nào đang dạy trong tháng này.</h4>
+}

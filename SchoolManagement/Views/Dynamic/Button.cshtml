@@ -1,0 +1,12 @@
+@using Utilities
+@model dynamic
+
+<td class="text-center">
+    @await Html.PartialAsync(Helper.StaticUrl.ButtonChild.ButtonDetails, Model, null)
+
+    @await Html.PartialAsync(Helper.StaticUrl.ButtonChild.ButtonEdit, Model, null)
+
+    @await Html.PartialAsync(Helper.StaticUrl.ButtonChild.ButtonDelete, Model, null)
+
+    @await Html.PartialAsync(Helper.StaticUrl.ButtonChild.ButtonDuplicate, Model, null)
+</td>

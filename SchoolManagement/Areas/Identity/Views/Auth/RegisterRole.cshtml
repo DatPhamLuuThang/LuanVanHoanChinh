@@ -1,0 +1,42 @@
+﻿@model SchoolManagement.Areas.Identity.Models.RegisterRoleViewModel
+
+@{
+    ViewData["Title"] = ViewContext.RouteData.Values["action"];
+    Layout = "~/Areas/Identity/Views/Shared/_Layouts.cshtml";
+}
+
+
+
+        <div class="card">
+
+            <div class="card-body">
+                <h4>
+                    @ViewData["Title"]
+                </h4>
+                <p><code>@ViewData["Title"].ToString().ToLower()</code> @ViewContext.RouteData.Values["controller"].ToString()</p>
+
+                <div class="m-t-25">
+                    <form asp-action=@ViewContext.RouteData.Values["action"] asp-controller=@ViewContext.RouteData.Values["controller"] asp-area=@ViewContext.RouteData.Values["area"]>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control" required="true" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-tone"><i class="anticon anticon-plus-circle m-r-5"></i>@ViewContext.RouteData.Values["action"]</button>
+                            <a asp-action="Dashboard" asp-controller=@ViewContext.RouteData.Values["controller"] asp-area=@ViewContext.RouteData.Values["area"] 
+                               class="btn btn-secondary btn-tone" data-toggle="tooltip" data-placement="top" title="Click to back">
+                                <i class="anticon anticon-undo m-r-5"></i>Trở về
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Content Wrapper END -->
+        

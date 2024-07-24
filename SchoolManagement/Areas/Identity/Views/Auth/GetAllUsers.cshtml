@@ -1,0 +1,219 @@
+﻿@model IEnumerable<UserWithRole>
+@using Utilities
+@{
+    ViewData["Title"] = ViewContext.RouteData.Values["action"];
+    Layout = "~/Areas/Identity/Views/Shared/_Layouts.cshtml";
+}
+<div class="card">
+<div class="card-body">
+    <div class="m-t-25">
+
+        <table id="data-table" class="table">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>ID</th>
+                <th>Tools</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                var thisRole = string.Join(" ", item.ListRole.Select(x => x.Name));
+                <tr>
+
+                    <td>
+                        <b>@item.User.UserName</b>
+                    </td>
+
+                    <td>@item.User.Id</td>
+
+                    <td class="text-center">
+                        <div class="btn-group">
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#detailsModal_@item.User.Id">
+                                <i class="anticon anticon-info-circle" data-toggle="tooltip" data-placement="top" title="Chi tiết"></i>
+                            </button>
+
+                            <i class="m-r-5"></i>
+
+                            <a type="button" class="btn btn-success" asp-area="Identity" asp-controller="Auth" asp-action="GetUserRole" asp-route-id="@item.User.Id">
+                                <i class="anticon anticon-edit" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa quyền"></i>
+                            </a>
+
+                            <i class="m-r-5"></i>
+
+                            <button type="button" class="btn btn-info btn-tone m-r-5" data-toggle="modal" data-target="#changeStatusModal_@item.User.Id">
+                                <i class="anticon anticon-swap" data-toggle="tooltip" data-placement="top" title="Thay đổi trạng thái truy cập"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-danger tone m-r-5" data-toggle="modal" data-target="#deleteUserModal_@item.User.Id">
+                                <i class="anticon anticon-delete" data-toggle="tooltip" data-placement="top" title="Xóa tài khoản"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#resetPasswordModal_@item.User.Id">
+                                <i class="anticon anticon-key" data-toggle="tooltip" data-placement="top" title="Cấp lại mật khẩu"></i>
+                            </button>
+
+
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="detailsModal_@item.User.Id">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Chi tiết tài khoản</h5>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <i class="anticon anticon-close"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="modal-body">
+                                            <div class="table">
+                                                <table class="table">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>ID:</td>
+                                                        <td>@item.User.Id</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>UserName:</td>
+                                                        <td>@item.User.UserName</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Email:</td>
+                                                        <td>@item.User.Email</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>PhoneNumber:</td>
+                                                        <td>@item.User.PhoneNumber</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Role:</td>
+                                                        <td>@(item.ListRole.Any() ? thisRole : "Chưa được cấp quyền")</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            @if (!item.User.Active)
+                                            {
+                                                <div class="modal-body text-danger">
+                                                    Tài khoản ID: <b>@item.User.Email</b> <br/> đang bị khóa
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="modal-body text-success">
+                                                    Tài khoản ID: <b>@item.User.Email</b> <br/>đang hoạt động
+                                                </div>
+                                            }
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    <i class="@Helper.FormatButton.Close.Icon"></i> @Helper.FormatButton.Close.Title
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="changeStatusModal_@item.User.Id">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Xác nhận thay đổi trạng thái</h5>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <i class="anticon anticon-close"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 class="@(item.User.Active ? "text-danger" : "text-success")">
+                                            @(item.User.Active ? "Khóa tài khoản" : "Mở tài khoản")
+                                        </h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="btn-group">
+                                            <a class="btn btn-secondary"
+                                               asp-area="Identity"
+                                               asp-controller="Auth"
+                                               asp-action="ChangeActive"
+                                               asp-route-id="@item.User.Id">
+                                                <i class="anticon anticon-check-circle m-r-5"></i>Xác nhận
+                                            </a>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                <i class="@Helper.FormatButton.Close.Icon"></i> @Helper.FormatButton.Close.Title
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="deleteUserModal_@item.User.Id">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Xác nhận xóa quyền</h5>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <i class="anticon anticon-close"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Tài khoản: @item.User.Email
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <div class="btn-group">
+                                            <a class="btn btn-secondary"
+                                               asp-area="Identity"
+                                               asp-controller="Auth"
+                                               asp-action="DeleteAccount"
+                                               asp-route-idAc="@item.User.Id">
+                                                <i class="anticon anticon-check-circle m-r-5"></i>Xác nhận
+                                            </a>
+                                            <i class="m-r-5"></i>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                <i class="@Helper.FormatButton.Close.Icon"></i> @Helper.FormatButton.Close.Title
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="resetPasswordModal_@item.User.Id">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Cấp lại mật khẩu</h5>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <i class="anticon anticon-close"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Bạn có chắc chắn muốn cấp lại mật khẩu cho tài khoản: <b>@item.User.UserName</b>?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            <i class="anticon anticon-close-circle m-r-5"></i> Hủy
+                                        </button>
+                                        <a href="@Url.Action("ResetUserPassword", "Auth", new { userId = item.User.Id })" class="btn btn-warning">
+                                            <i class="anticon anticon-key m-r-5"></i> Cấp lại mật khẩu
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </td>
+
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+</div>

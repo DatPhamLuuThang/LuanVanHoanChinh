@@ -1,0 +1,15 @@
+@using Utilities
+@model dynamic
+
+
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#duplicateModal_@Model.Id">
+    <i class="@Helper.FormatButton.Duplicate.Icon" 
+       data-toggle="tooltip" data-placement="top" title="@Helper.FormatButton.Duplicate.Title"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="duplicateModal_@Model.Id">
+    @await Html.PartialAsync(Helper.StaticUrl.Duplicate, Model.Id.ToString(), null)
+</div>
+<!-- Modal End-->

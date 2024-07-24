@@ -1,0 +1,144 @@
+﻿<div id="nav" class="nav-container d-flex">
+    <div class="nav-content d-flex">
+        <div class="language-switch-container">
+            @if (User.Claims.Where(x => x.Type == "role").ToList().Count >= 2)
+            {
+                <p class="alert alert-light">
+                    Role: Many Roles
+                </p>
+            }
+            else
+            {
+                @if (User.Claims.Where(x => x.Type == "role").ToList().Count == 0)
+                {
+                    <p class="alert alert-light">
+                        Role: "Empty"
+                    </p>
+                }
+                else
+                {
+                    <p class="alert alert-light">
+                        Role: @User.Claims.FirstOrDefault(x => x.Type == "role")?.Value
+                    </p>
+                }
+            }
+        </div>
+        <div class="user-container d-flex">
+            <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               
+                <div class="name">
+                    @User.Claims.FirstOrDefault(x => x.Type == "name")?.Value
+                </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end user-menu wide">
+
+                <div class="row mb-1 ms-0 me-0">
+                    <div class="col-12 p-1 mb-3 pt-3">
+                        <div class="separator-light"></div>
+                    </div>
+                    <div class="col-6 pe-1 ps-1">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a asp-area="Identity" asp-controller="Auth" asp-action="Logout">
+                                    <i data-acorn-icon="logout" class="me-2" data-acorn-size="17"></i>
+                                    <span class="align-middle">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <ul class="list-unstyled list-inline text-center menu-icons">
+            <li class="list-inline-item">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#searchPagesModal">
+                    <i data-acorn-icon="search" data-acorn-size="18"></i>
+                </a>
+            </li>
+            <li class="list-inline-item">
+                <a href="#" id="pinButton" class="pin-button">
+                    <i data-acorn-icon="lock-on" class="unpin" data-acorn-size="18"></i>
+                    <i data-acorn-icon="lock-off" class="pin" data-acorn-size="18"></i>
+                </a>
+            </li>
+            <li class="list-inline-item">
+                <a href="#" id="colorButton">
+                    <i data-acorn-icon="light-on" class="light" data-acorn-size="18"></i>
+                    <i data-acorn-icon="light-off" class="dark" data-acorn-size="18"></i>
+                </a>
+            </li>
+        </ul>
+
+
+        <div class="menu-container flex-grow-1">
+            <ul id="menu" class="menu">
+                @if (User.IsInRole("Manager"))
+                {
+                    <li>
+                        <a asp-area="DataEntry" asp-controller="Home" asp-action="Index">
+                            <i data-acorn-icon="book" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Trang quản lí thông tin</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-action="Dashboard" asp-controller="Auth" asp-area="Identity" data-href="Dashboards.html">
+                            <i data-acorn-icon="settings-1" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Xác thực và phân quyền</span>
+                        </a>
+                    </li>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <li>
+                        <a asp-area="Administrator" asp-controller="Home" asp-action="Index">
+                            <i data-acorn-icon="home-garage" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Ban giám hiệu</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-action="Dashboard" asp-controller="Auth" asp-area="Identity" data-href="Dashboards.html">
+                            <i data-acorn-icon="settings-1" class="icon" data-acorn-size="18"></i>
+                            <span class="label">Xác thực và phân quyền</span>
+                        </a>
+                    </li>
+                }
+                
+                
+                <li>
+                    <a asp-area="Identity" asp-controller="Auth" asp-action="ChangePassword" data-href="Dashboards.html">
+                        <i data-acorn-icon="rotate-left" class="icon" data-acorn-size="18"></i> 
+                        <span class="label">Đổi mật khẩu</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a asp-area="Identity" asp-controller="Auth" asp-action="Logout" data-href="Dashboards.html">
+                        <i data-acorn-icon="logout" class="icon" data-acorn-size="18"></i> 
+                        <span class="label">Đăng xuất</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-area="" asp-controller="Home" asp-action="IndexLayout">
+                        <i data-acorn-icon="arrow-top-left" class="icon" data-acorn-size="18"></i>
+                        <span class="label">Trở về</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mobile-buttons-container">
+            <a href="#" id="scrollSpyButton" class="spy-button" data-bs-toggle="dropdown">
+                <i data-acorn-icon="menu-dropdown"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end" id="scrollSpyDropdown"></div>
+            <a href="#" id="mobileMenuButton" class="menu-button">
+                <i data-acorn-icon="menu"></i>
+            </a>
+        </div>
+
+    </div>
+    <div class="nav-shadow"></div>
+</div>

@@ -1,0 +1,108 @@
+﻿@using Utilities
+@model List<ScheduleViewModel>
+
+@{
+    ViewBag.Title = "Lịch giảng dạy";
+    Layout = "~/Views/Shared/_Layouts.cshtml";
+}
+
+
+<section class="scroll-section" id="hover">
+    <div class="card mb-5">
+        <div class="card-body">
+            <!-- Hover Controls Start -->
+            <div class="text-center mb-3 cta-1 text-primary">Lịch dạy giáo viên</div>
+            <div class="row">
+                <div class="col-12 col-sm-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 border border-separator bg-foreground search-sm">
+                        <input class="form-control form-control-sm datatable-search" placeholder="Search" data-datatable="#datatableHover"/>
+                        <span class="search-magnifier-icon">
+                            <i data-acorn-icon="search"></i>
+                        </span>
+                        <span class="search-delete-icon d-none">
+                            <i data-acorn-icon="close"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-7 col-lg-9 col-xxl-10 text-end mb-1">
+                    <div class="d-inline-block">
+                        <button class="btn btn-icon btn-icon-only btn-outline-muted btn-sm datatable-print" type="button" data-datatable="#datatableHover">
+                            <i data-acorn-icon="print"></i>
+                        </button>
+
+                        <div class="d-inline-block datatable-export" data-datatable="#datatableHover">
+                            <button
+                                class="btn btn-icon btn-icon-only btn-outline-muted btn-sm dropdown"
+                                data-bs-toggle="dropdown"
+                                type="button"
+                                data-bs-offset="0,3">
+                                <i data-acorn-icon="download"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                <button class="dropdown-item export-copy" type="button">Copy</button>
+                                <button class="dropdown-item export-excel" type="button">Excel</button>
+                                <button class="dropdown-item export-cvs" type="button">Cvs</button>
+                            </div>
+                        </div>
+                        <div class="dropdown-as-select d-inline-block datatable-length" data-datatable="#datatableHover">
+                            <button
+                                class="btn btn-outline-muted btn-sm dropdown-toggle"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-bs-offset="0,3">
+                                10 Items
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                <a class="dropdown-item" href="#">5 Items</a>
+                                <a class="dropdown-item active" href="#">10 Items</a>
+                                <a class="dropdown-item" href="#">20 Items</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Hover Controls End -->
+
+            <!-- Hover Table Start -->
+            @if (Model.Any())
+            {
+                <table
+                    class="data-table data-table-pagination data-table-standard responsive nowrap hover"
+                    id="datatableHover"
+                    data-order='[[ 0, "desc" ]]'>
+                    <thead>
+                    <tr>
+                        <th class="text-muted text-small text-uppercase">Ngày</th>
+                        <th class="text-muted text-small text-uppercase">Tiết học</th>
+                        <th class="text-muted text-small text-uppercase">Môn học</th>
+
+                        <th class="text-muted text-small text-uppercase">Lớp học</th>
+                        <th class="text-muted text-small text-uppercase">Giờ bắt đầu</th>
+                        <th class="text-muted text-small text-uppercase">Giờ kết thúc</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var schedule in Model)
+                    {
+                        <tr>
+                            <td>@schedule.Day.ToString(Helper.FormatDateTime.OnlyDate)</td>
+                            <td>@schedule.LessonName</td>
+                            <td>@schedule.SubjectName</td>
+                            <td>@schedule.ClassRoomName</td>
+                            <td>@schedule.StartTime</td>
+                            <td>@schedule.EndTime</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h4 class="text-center">Không có lịch dạy trong tháng này.</h4>
+            }
+        </div>
+    </div>
+</section>

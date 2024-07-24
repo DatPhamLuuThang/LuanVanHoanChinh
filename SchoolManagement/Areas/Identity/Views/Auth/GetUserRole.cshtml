@@ -1,0 +1,86 @@
+﻿@using SchoolManagement.Models
+@using Utilities
+@model DeleteRoleModel
+
+@{
+    ViewData["Title"] = ViewContext.RouteData.Values["action"];
+    Layout = "~/Areas/Identity/Views/Shared/_Layouts.cshtml";
+}
+<div class="card">
+    <div class="card-body">
+        
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#roleModal">
+            <i class="anticon anticon-plus-circle" data-toggle="tooltip" data-placement="top" title="Thêm quyền cho tài khoản"></i>
+        </button>
+
+        <div class="modal fade" id="roleModal">
+            @await Html.PartialAsync("Partial/FormUserRole.cshtml", new CreateUserRole { IdUser = Model.User.Id })
+        </div>
+        
+        <div class="m-t-25">
+            <table id="data-table" class="table">
+                <thead>
+                <tr>
+        
+                    <th>Tên User</th>
+        
+                    <th>Tên quyền</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.listRole)
+                {
+                    <tr>
+                       
+                        <td>@Model.User.Email</td>
+             
+                        <td>@item.Name</td>
+                        
+                        <td class="text-center">
+
+                            <button type="button" class="btn btn-danger tone m-r-5" data-toggle="modal" data-target="#deleteUserRoleModal_@item.Id">
+                                <i class="anticon anticon-delete"  data-toggle="tooltip" data-placement="top" title="Xóa quyền của tài khoản"></i>
+                            </button>
+
+                            <div class="modal fade" id="deleteUserRoleModal_@item.Id">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Xác nhận xóa quyền</h5>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <i class="anticon anticon-close"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Quyền: @item.Name
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="btn-group">
+                                                <a class="btn btn-secondary"
+                                                   asp-area="Identity"
+                                                   asp-controller="Auth"
+                                                   asp-action="DeleteUserRole"
+                                                   asp-route-idUser="@Model.User.Id"
+                                                   asp-route-idRole="@item.Id">
+                                                    <i class="anticon anticon-check-circle m-r-5"></i>Xác nhận xóa
+                                                </a>
+
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                    <i class="@Helper.FormatButton.Close.Icon"></i> @Helper.FormatButton.Close.Title
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
+</div>
+<!-- Content Wrapper END -->

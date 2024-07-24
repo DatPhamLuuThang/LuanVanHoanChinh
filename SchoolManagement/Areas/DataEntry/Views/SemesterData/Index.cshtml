@@ -1,0 +1,65 @@
+﻿@using Utilities
+@model IEnumerable<CoreEntities.SchoolMgntModel.Semester>
+
+<div class="card">
+    <div class="card-body">
+        <div class="m-t-25">
+            <p>
+                @await Html.PartialAsync(Helper.StaticUrl.ButtonChild.ButtonCreate, Model, null)
+            </p>
+
+            <table id="data-table" class="table">
+                <thead>
+                <tr>
+                    <th>Tên học kì</th>
+                    <th>Bắt đầu từ</th>
+                    <th>Kết thúc tại</th>
+                    <th>Số tuần học</th>
+                    <th>Tuần thi</th>
+                    <th>Tuần nhập điểm</th>
+
+                    <th class="text-center col-2">
+                        <i class="anticon anticon-tool"></i>Tools
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.NameSemester</td>
+                        <th>@item.StartIn!.Value.ToString(Helper.FormatDateTime.OnlyDate)</th>
+                        <th>@item.EndIn!.Value.ToString(Helper.FormatDateTime.OnlyDate)</th>
+                        <th>
+                            @{
+                                int examWeeks = 0;
+                                if (item.StartIn.HasValue && item.EndIn.HasValue)
+                                {
+                                    TimeSpan duration = item.EndIn.Value - item.StartIn.Value;
+                                    examWeeks = (int)Math.Ceiling((decimal)duration.TotalDays / 7);
+                                }
+                                @examWeeks
+                            }
+                        </th>
+
+                        <th>@item.StartIn.Value.AddDays(item.ExamWeek * 7).ToString(Helper.FormatDateTime.OnlyDate) - @item.StartIn.Value.AddDays((item.ExamWeek + 1) * 7 - 1).ToString(Helper.FormatDateTime.OnlyDate)</th>
+                        <th>
+                            @{
+                               
+                                var tuanNhapDiemStart = item.StartIn.Value.AddDays((item.ExamWeek + 1) * 7);
+                               
+                                var tuanNhapDiemEnd = tuanNhapDiemStart.AddDays(6);
+                            }
+                            @tuanNhapDiemStart.ToString(Helper.FormatDateTime.OnlyDate) - @tuanNhapDiemEnd.ToString(Helper.FormatDateTime.OnlyDate)
+                        </th>
+
+                        @await Html.PartialAsync(Helper.StaticUrl.Button, item, null)
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

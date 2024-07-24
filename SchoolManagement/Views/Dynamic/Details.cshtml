@@ -1,0 +1,49 @@
+﻿@using Utilities
+@using System.Reflection
+@using System.ComponentModel
+@model dynamic
+
+@{
+    ViewData["Titles"] = Helper.FormatButton.Details.Title;
+    PropertyInfo[] properties = Model.GetType().GetProperties();
+}
+<div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">@ViewData["Titles"]</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <table class="table table-hover table-bordered table-sm col-md-12">
+                <tbody class="col-md-12">
+                @foreach (var property in properties.Where(x => !ViewBag.NonAccessAtributeInDetails.Contains(x.Name)))
+                {
+                    <tr class="col-md-12">
+
+
+                        <th>
+                            @(property.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? property.Name)
+                        </th>
+
+
+                        <td class="col-md-6 text-center">
+                            @if (property.GetValue(Model) == null
+                                 || string.Equals(property.GetValue(Model).ToString(), Guid.Empty.ToString()))
+                            {
+                                <i class="text-danger">NULL</i>
+                                continue;
+                            }
+                            @property.GetValue(Model)
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <i class="@Helper.FormatButton.Close.Icon"></i> @Helper.FormatButton.Close.Title
+            </button>
+        </div>
+    </div>
+</div>

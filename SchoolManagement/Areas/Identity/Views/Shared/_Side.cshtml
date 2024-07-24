@@ -1,0 +1,163 @@
+﻿<!-- Side Nav START -->
+<div class="side-nav">
+    <div class="side-nav-inner">
+
+
+        @* <li> *@
+        @*     <a class=" nav-link" asp-area="@child.Area" asp-controller="@child.Controller" asp-action="Index" *@
+        @*        data-bs-toggle="tooltip" *@
+        @*        data-bs-placement="top" *@
+        @*        data-bs-title="@(string.IsNullOrEmpty(child.Description) ? "?" : child.Description)"> *@
+        @*         <span class="icon-holder"> *@
+        @*             <i class="@child.Icon"></i> *@
+        @*         </span> *@
+        @*         <span class="title">@child.Name</span> *@
+        @*     </a> *@
+        @* </li> *@
+
+        @if (User.IsInRole("Admin"))
+        {
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+                <span>HỆ THỐNG</span>
+            </h6>
+            <br/>
+
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       asp-area=@ViewContext.RouteData.Values["area"] asp-controller="Auth" asp-action="GetAllUsers"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                        <i class="anticon anticon-user"></i> Quản lí tài khoản
+                    </a>
+                </li>
+                <br/>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       asp-area=@ViewContext.RouteData.Values["area"] asp-controller="Auth" asp-action="GetAllRole"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                        <i class="anticon anticon-file-add"></i> Quản lí quyền
+                    </a>
+                </li>
+                <br/>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       asp-area=@ViewContext.RouteData.Values["area"] asp-controller="Auth" asp-action="RegisterUserRole"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                        <i class="anticon anticon-user-add"></i> Thêm quyền cho User
+                    </a>
+                </li>
+                <br/>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       asp-area="Identity" asp-controller="Auth" asp-action="Sigup"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                        <i class="anticon anticon-user-add"></i> Thêm User mới
+                    </a>
+                </li>
+
+
+                <br/>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       asp-area=@ViewContext.RouteData.Values["area"] asp-controller="Auth" asp-action="ChangePassword" asp-route-id=""
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                        <i class="anticon anticon-key"></i> Đổi mật khẩu
+                    </a>
+                </li>
+                <br/>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       asp-area="" asp-controller="Home" asp-action="Index"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                        <i class="anticon anticon-rollback"></i> Trở lại
+                    </a>
+                </li>
+                <br/>
+
+                <li class="nav-item">
+                    <a asp-area="Identity" asp-controller="Auth" asp-action="Logout" class="dropdown-item d-block p-h-15 p-v-10">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <i class="anticon anticon-logout"></i>
+                                <span class="m-l-10">Đăng xuất</span>
+                            </div>
+                            <i class="anticon font-size-10 anticon-right"></i>
+                        </div>
+                    </a>
+                </li>
+
+            </ul>
+        }
+        @if (User.IsInRole("Manager"))
+        {
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+                <span>HỆ THỐNG</span>
+            </h6>
+            <br/>
+
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       asp-area=@ViewContext.RouteData.Values["area"] asp-controller="Auth" asp-action="GetAllUsers"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                        <i class="anticon anticon-user"></i> Quản lí tài khoản
+                    </a>
+                </li>
+                <br/>
+
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       asp-area=@ViewContext.RouteData.Values["area"] asp-controller="Auth" asp-action="RegisterUserRole"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                        <i class="anticon anticon-user-add"></i> Thêm quyền cho User
+                    </a>
+                </li>
+                <br/>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       asp-area="Identity" asp-controller="Auth" asp-action="Sigup"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                        <i class="anticon anticon-user-add"></i> Thêm User mới
+                    </a>
+                </li>
+
+
+                <br/>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       asp-area=@ViewContext.RouteData.Values["area"] asp-controller="Auth" asp-action="ChangePassword" asp-route-id=""
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                        <i class="anticon anticon-key"></i> Đổi mật khẩu
+                    </a>
+                </li>
+                <br/>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2"
+                       asp-area="" asp-controller="Home" asp-action="Index"
+                       data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                        <i class="anticon anticon-rollback"></i> Trở lại
+                    </a>
+                </li>
+                <br/>
+
+                <li class="nav-item">
+                    <a asp-area="Identity" asp-controller="Auth" asp-action="Logout" class="dropdown-item d-block p-h-15 p-v-10">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <i class="anticon anticon-logout"></i>
+                                <span class="m-l-10">Đăng xuất</span>
+                            </div>
+                            <i class="anticon font-size-10 anticon-right"></i>
+                        </div>
+                    </a>
+                </li>
+
+            </ul>
+        }
+    </div>
+</div>
+<!-- Side Nav END -->

@@ -1,0 +1,613 @@
+﻿@using Utilities
+@model HomeIndexViewModel
+@{
+    ViewData["Title"] = "";
+    Layout = "~/Views/Shared/_Layouts.cshtml";
+}
+
+@foreach (var item in Model.SchoolDetails)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-container">
+                    <h1 class="mb-0 pb-0 display-4" id="title">
+                        <b>@item.SchoolName</b>
+                    </h1>
+                    <br/>
+                    <nav class="breadcrumb-container d-inline-block" aria-label="breadcrumb">
+                        <ul class="breadcrumb pt-0">
+
+                            <li class="breadcrumb-item">
+                                <h4>Email</h4>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <span>@item.Email</span>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+@if (User.IsInRole("Student") && Model.Student != null)
+{
+    <div class="row">
+    <div class="col-lg-6 mb-5">
+        <h2 class="small-title">Thông tin cá nhân</h2>
+        <div class="card sh-40 h-lg-100-card">
+            <div class="card-body mb-n2 scroll-out h-100">
+                <div class="scroll h-100">
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="circle" class="text-primary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">Họ và tên</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Student!.FirstName @Model.Student!.LastName</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="circle" class="text-primary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">Ngày tháng năm sinh</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Student.BirthDay.ToString(Helper.FormatDateTime.OnlyDate)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="square" class="text-secondary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">
+                                        Giới tính
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">
+
+                                    @if (Model.Student.Gender)
+                                    {
+                                        <div class="text-muted ms-2 mt-n1 lh-1-25">Nam</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="text-muted ms-2 mt-n1 lh-1-25">Nữ</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="square" class="text-secondary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">Số điện thoại</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Student.PhoneNumber</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="circle" class="text-primary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">Địa chỉ</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Student.Address</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="hexagon" class="text-tertiary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">
+                                        Email
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Student.Email</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-5">
+        <div class="d-flex justify-content-between">
+            <h2 class="small-title">Công cụ</h2>
+        </div>
+        <div class="row g-2">
+            <div class="col-6 col-xl-4 sh-19" data-title="More Cards" data-intro="Category card with an icon!" data-step="3">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-area="" asp-controller="Student" asp-action="Edit">
+                        <i data-acorn-icon="edit" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Chỉnh sửa</p>
+                        <div class="text-extra-small fw-medium text-muted">Thông tin cá nhân</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-xl-4 sh-19">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-area="" asp-controller="Student" asp-action="ViewSchedule">
+                        <i data-acorn-icon="controller" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Thời khóa biểu</p>
+                        <div class="text-extra-small fw-medium text-muted">Dành sách học sinh</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-xl-4 sh-19">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-area="" asp-controller="Student" asp-action="ListViolations">
+                        <i data-acorn-icon="layout-3" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Vi Phạm</p>
+                        <div class="text-extra-small fw-medium text-muted">Của học sinh</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-xl-4 sh-19">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-area="" asp-controller="Student" asp-action="ViewMonthsInSemester">
+                        <i data-acorn-icon="list" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Kết quả học tập</p>
+                        <div class="text-extra-small fw-medium text-muted">Của học sinh</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-xl-4 sh-19">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-area="" asp-controller="Student" asp-action="ViewSemesterTranscript">
+                        <i data-acorn-icon="list" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Tổng kết học kì</p>
+                        <div class="text-extra-small fw-medium text-muted">Của học sinh</div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-6 col-xl-4 sh-19">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-area="Identity" asp-controller="Auth" asp-action="Logout">
+                        <i data-acorn-icon="logout" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Đăng Xuất</p>
+                        <div class="text-extra-small fw-medium text-muted">Tài Khoản</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+}
+else
+{
+    <b>
+        <picture></picture>
+    </b>
+}
+
+@if (User.IsInRole("Teacher") && Model.Teacher != null)
+{
+    <div class="row">
+    <div class="col-lg-6 mb-5">
+        <h2 class="small-title">Thông tin cá nhân</h2>
+        <div class="card sh-40 h-lg-100-card">
+            <div class="card-body mb-n2 scroll-out h-100">
+                <div class="scroll h-100">
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="circle" class="text-primary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">Họ và tên</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Teacher!.FirstName @Model.Teacher!.LastName</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="circle" class="text-primary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">Ngày tháng năm sinh</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Teacher.BirthDay.ToString(Helper.FormatDateTime.OnlyDate)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="square" class="text-secondary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">
+                                        Giới tính
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">
+
+                                    @if (Model.Teacher.Gender)
+                                    {
+                                        <div class="text-muted ms-2 mt-n1 lh-1-25">Nam</div>
+                                    }
+                                    else
+                                    {
+                                        <div class="text-muted ms-2 mt-n1 lh-1-25">Nữ</div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="square" class="text-secondary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">Số điện thoại</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Teacher.PhoneNumber</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="circle" class="text-primary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">Địa chỉ</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Teacher.Address</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="hexagon" class="text-tertiary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">
+                                        Email
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Teacher.Email</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="hexagon" class="text-tertiary align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center">
+                                <div class="d-flex flex-column">
+                                    <div class="text-alternate mt-n1 lh-1-25">
+                                        Chuyên ngành
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-inline-block d-flex justify-content-end align-items-center h-100">
+                                <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Teacher.Specialize</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-0 mb-2">
+                        <div class="col-auto">
+                            <div class="sw-3 d-inline-block d-flex justify-content-start align-items-center h-100">
+                                <div class="sh-3">
+                                    <i data-acorn-icon="" class="text-warning align-top"></i>
+                                </div>
+                            </div>
+                        </div>
+                        @* <div class="col"> *@
+                        @*     <div class="card-body d-flex flex-column pt-0 pb-0 ps-3 pe-4 h-100 justify-content-center"> *@
+                        @*         <div class="d-flex flex-column"> *@
+                        @*             <div class="text-alternate mt-n1 lh-1-25">Kinh nghiệm</div> *@
+                        @*         </div> *@
+                        @*     </div> *@
+                        @* </div> *@
+                        @* <div class="col-auto"> *@
+                        @*     <div class="d-inline-block d-flex justify-content-end align-items-center h-100"> *@
+                        @*         <div class="text-muted ms-2 mt-n1 lh-1-25">@Model.Teacher.Experience năm</div> *@
+                        @*     </div> *@
+                        @* </div> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-5">
+        <div class="d-flex justify-content-between">
+            <h2 class="small-title">Công cụ</h2>
+        </div>
+        <div class="row g-2">
+            <div class="col-6 col-xl-4 sh-19" data-title="More Cards" data-intro="Category card with an icon!" data-step="3">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-action="EditInfoTeacher" asp-controller="TeacherAction" asp-area="">
+                        <i data-acorn-icon="edit" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Chỉnh sửa</p>
+                        <div class="text-extra-small fw-medium text-muted">Thông tin cá nhân</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-xl-4 sh-19">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-action="ListStudentInClass" asp-controller="TeacherAction" asp-area="">
+                        <i data-acorn-icon="controller" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Lớp Chủ Nhiệm</p>
+                        <div class="text-extra-small fw-medium text-muted">Danh sách học sinh</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-xl-4 sh-19">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-area="" asp-controller="TeacherAction" asp-action="ScheduleOfTeacher">
+                        <i data-acorn-icon="layout-3" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Thời Khóa Biểu</p>
+                        <div class="text-extra-small fw-medium text-muted">Giảng Dạy</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-xl-4 sh-19">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-area="" asp-controller="TeacherAction" asp-action="CurrentClasses">
+                        <i data-acorn-icon="list" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Danh sách các lớp</p>
+                        <div class="text-extra-small fw-medium text-muted">Đang Dạy</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-xl-4 sh-19">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-area="" asp-controller="TeacherAction" asp-action="ViewMonthsInSemester">
+                        <i data-acorn-icon="clock" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Các tháng trong học kì</p>
+                        <div class="text-extra-small fw-medium text-muted">Đang Dạy</div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-xl-4 sh-19">
+                <div class="card h-100 hover-scale-up">
+                    <a class="card-body text-center" asp-area="Identity" asp-controller="Auth" asp-action="Logout">
+                        <i data-acorn-icon="logout" class="text-primary"></i>
+                        <p class="heading mt-3 text-body">Đăng Xuất</p>
+                        <div class="text-extra-small fw-medium text-muted">Tài Khoản</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+}
+else
+{
+    <b></b>
+}
+
+<section class="scroll-section" id="flow">
+    <h2 class="small-title text-center">Tin tức và Hình ảnh nổi bậc của trường</h2>
+    <div class="row gx-2">
+        <div class="col-12 p-0 mb-5">
+            <div class="glide" id="glideFlow">
+                <div class="glide__track" data-glide-el="track">
+                    <div class="glide__slides">
+                        @foreach (var img in Model.SchoolImageFilePaths.Where(x => !string.IsNullOrEmpty(x)))
+                        {
+                            <div class="glide__slide">
+                                <div class="card mb-5 sh-19 d-flex">
+                                    <div class="card-body d-flex">
+                                        <img src="@("/uploads/" + img)" class="img-fluid  opacity-75 d-flex align-self-center" alt="logo image">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="scroll-section" id="single">
+    <div class="row">
+        <div class="col-12 p-0 mb-5">
+            <div class="glide" id="glideSingle">
+                <div class="glide__track" data-glide-el="track">
+                    <div class="glide__slides">
+                        @foreach (var newsItem in Model.News)
+                        {
+                            @if (!string.IsNullOrEmpty(newsItem.Noty))
+                            {
+                                <div class="glide__slide">
+                                    <div class="card mb-5">
+                                        <div class="row g-0 sh-10">
+                                            <div class="col-10 col-lg-11 h-100">
+                                                <div class="row g-0 h-100 align-content-center">
+                                                    <div class="col-12 col-lg-5 d-flex align-items-center">
+                                                        <p class="heading mb-0 ps-card"> @newsItem.Noty</p>
+                                                    </div>
+                                                    <div class="col-lg-3 col-5 col-sm-5 d-flex align-items-center mb-1 mb-md-0">
+                                                        <p class="mb-0 text-alternate ps-card">
+                                                            <strong>@newsItem.CreatedAt.ToString("dd/MM/yyyy")</strong>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-sm-4 col-3 d-flex align-items-center mb-0">
+
+                                                    </div>
+                                                    <div class="col-lg-2 col-sm-3 col-4 d-flex align-items-center justify-content-end">
+                                                        <div class="pe-card">
+                                                            <span class="badge bg-tertiary text-uppercase">New</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="text-center">
+                    <span class="glide__arrows slider-nav" data-glide-el="controls">
+                        <button class="btn btn-icon btn-icon-only btn-outline-primary" data-glide-dir="<">
+                            <i data-acorn-icon="chevron-left"></i>
+                        </button>
+                    </span>
+                    <span class="glide__bullets" data-glide-el="controls[nav]"></span>
+                    <span class="glide__arrows slider-nav" data-glide-el="controls">
+                        <button class="btn btn-icon btn-icon-only btn-outline-primary" data-glide-dir=">">
+                            <i data-acorn-icon="chevron-right"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="scroll-section" id="googleMaps">
+    <h2 class="small-title">Google Maps</h2>
+    <div class="card mb-5 sh-50">
+        <div class="card-body h-100">
+
+            <iframe class="h-100 w-100" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6414.599976104878!2d105.8200365735565!3d10.26909904370583!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a07e5000000001%3A0x9cd819dbab96a8ee!2zVHLGsOG7nW5nIFRIUFQgQ2jDonUgVGjDoG5oIEk!5e0!3m2!1svi!2s!4v1701444525421!5m2!1svi!2s" allowfullscreen></iframe>
+        </div>
+    </div>
+</section>

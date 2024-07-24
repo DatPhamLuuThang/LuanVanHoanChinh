@@ -1,0 +1,233 @@
+﻿@model CoreEntities.SchoolMgntModel.Student
+
+@{
+    ViewBag.Title = "Tổng kết điểm học kì";
+    Layout = "~/Views/Shared/_Layouts.cshtml";
+}
+
+
+
+@if (Model.Transcripts!.Any())
+{
+<section class="scroll-section" id="hover">
+
+    <div class="card mb-5">
+        <div class="card-body">
+            <!-- Hover Controls Start -->
+            <div class="row">
+                <h2 class="text-center">Danh Sách Điểm - @Model.FirstName @Model.LastName</h2>
+                <div class="text-center">
+                    @if (Model.Transcripts!.Any())
+                    {
+                        <div>
+                            <h3>Điểm Trung Bình Học Kì</h3>
+                            @{
+                                decimal tongHs1 = 0;
+                                decimal tongHs2 = 0;
+                                decimal tongHs3 = 0;
+                                int tongsl1 = 0;
+                                int tongsl2 = 0;
+                                int tongsl3 = 0;
+                                foreach (var transcript in Model.Transcripts!)
+                                {
+                                    if (transcript.TypeId == 1 || transcript.TypeId == 2)
+                                    {
+                                        tongHs1 += transcript.Value;
+                                        tongsl1 += 1;
+                                    }
+                                    else if (transcript.TypeId == 4)
+                                    {
+                                        tongHs3 += transcript.Value;
+                                        tongsl3 += 1;
+                                    }
+                                    else if (transcript.TypeId == 3)
+                                    {
+                                        tongHs2 += transcript.Value;
+                                        tongsl2 += 1;
+                                    }
+                                }
+
+                                decimal tongket = (tongHs1 + tongHs2 * 2 + tongHs3 * 3) / (tongsl1 + tongsl2 * 2 + tongsl3 * 3);
+                            }
+                            <p>Điểm trung bình học kì: @tongket.ToString("0.##")</p>
+                            <p>Hạnh kiểm: @Model.KindofConduct</p>
+                            <p>Học lực: @Model.Rank</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <h4 class="text-center">Không có điểm nào cho học sinh này.</h4>
+                    }
+                </div>
+                <div class="col-12 col-sm-5 col-lg-3 col-xxl-2 mb-1">
+                    <div class="d-inline-block float-md-start me-1 mb-1 search-input-container w-100 border border-separator bg-foreground search-sm">
+                        <input class="form-control form-control-sm datatable-search" placeholder="Search" data-datatable="#datatableHover"/>
+                        <span class="search-magnifier-icon">
+                            <i data-acorn-icon="search"></i>
+                        </span>
+                        <span class="search-delete-icon d-none">
+                            <i data-acorn-icon="close"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-7 col-lg-9 col-xxl-10 text-end mb-1">
+                    <div class="d-inline-block">
+                        <button class="btn btn-icon btn-icon-only btn-outline-muted btn-sm datatable-print" type="button" data-datatable="#datatableHover">
+                            <i data-acorn-icon="print"></i>
+                        </button>
+
+                        <div class="d-inline-block datatable-export" data-datatable="#datatableHover">
+                            <button
+                                class="btn btn-icon btn-icon-only btn-outline-muted btn-sm dropdown"
+                                data-bs-toggle="dropdown"
+                                type="button"
+                                data-bs-offset="0,3">
+                                <i data-acorn-icon="download"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                <button class="dropdown-item export-copy" type="button">Copy</button>
+                                <button class="dropdown-item export-excel" type="button">Excel</button>
+                                <button class="dropdown-item export-cvs" type="button">Cvs</button>
+                            </div>
+                        </div>
+                        <div class="dropdown-as-select d-inline-block datatable-length" data-datatable="#datatableHover">
+                            <button
+                                class="btn btn-outline-muted btn-sm dropdown-toggle"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-bs-offset="0,3">
+                                10 Items
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-end">
+                                <a class="dropdown-item" href="#">5 Items</a>
+                                <a class="dropdown-item active" href="#">10 Items</a>
+                                <a class="dropdown-item" href="#">20 Items</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Hover Controls End -->
+
+            <!-- Hover Table Start -->
+            <table
+                class="data-table data-table-pagination data-table-standard responsive nowrap hover"
+                id="datatableHover"
+                data-order='[[ 0, "desc" ]]'>
+                <thead>
+                <tr>
+                    <th class="text-muted text-small text-uppercase">Môn học</th>
+                    <th class="text-muted text-small text-uppercase">Điểm trả bài</th>
+                    <th class="text-muted text-small text-uppercase">Điểm 15 phút</th>
+                    <th class="text-muted text-small text-uppercase">Điểm 1 tiết</th>
+                    <th class="text-muted text-small text-uppercase">Điểm thi học kì</th>
+                    <th class="text-muted text-small text-uppercase">Điểm tổng kết học kì</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var transcript in Model.Transcripts!.GroupBy(t => t.Subject.NameSubject))
+                {
+                    <tr>
+                        <td class="text-center">@transcript.Key</td>
+                        <td class="text-center">
+                            @{
+                                List<string> diemTraBai = transcript.Where(t => t.TypeId == 1).Select(t => t.Value.ToString("0.##")).ToList();
+                                if (diemTraBai.Any())
+                                {
+                                    <span>[ @string.Join(", ", diemTraBai) ]</span>
+                                }
+                                else
+                                {
+                                    <span>N/A</span>
+                                }
+                            }
+                        </td>
+                        <td class="text-center">
+                            @{
+                                List<string> diem15Phut = transcript.Where(t => t.TypeId == 2).Select(t => t.Value.ToString("0.##")).ToList();
+                                if (diem15Phut.Any())
+                                {
+                                    <span>[ @string.Join(", ", diem15Phut) ]</span>
+                                }
+                                else
+                                {
+                                    <span>N/A</span>
+                                }
+                            }
+                        </td>
+                        <td class="text-center">
+                            @{
+                                List<string> diem1Tiet = transcript.Where(t => t.TypeId == 3).Select(t => t.Value.ToString("0.##")).ToList();
+                                if (diem1Tiet.Any())
+                                {
+                                    <span>[ @string.Join(", ", diem1Tiet) ]</span>
+                                }
+                                else
+                                {
+                                    <span>N/A</span>
+                                }
+                            }
+                        </td>
+                        <td class="text-center">
+                            @{
+                                List<string> diemthi = transcript.Where(t => t.TypeId == 4).Select(t => t.Value.ToString("0.##")).ToList();
+                                if (diemthi.Any())
+                                {
+                                    <span>[ @string.Join(", ", diemthi) ]</span>
+                                }
+                                else
+                                {
+                                    <span>N/A</span>
+                                }
+                            }
+                        </td>
+                        <td class="text-center">
+                            @{
+                                decimal tongHs1 = 0;
+                                decimal tongHs2 = 0;
+                                decimal tongHs3 = 0;
+                                int tongsl1 = 0;
+                                int tongsl2 = 0;
+                                int tongsl3 = 0;
+
+                                foreach (var studentTr in transcript)
+                                {
+                                    if (studentTr.TypeId == 1 || studentTr.TypeId == 2)
+                                    {
+                                        tongHs1 += studentTr.Value;
+                                        tongsl1 += 1;
+                                    }
+                                    else if (studentTr.TypeId == 4)
+                                    {
+                                        tongHs3 += studentTr.Value;
+                                        tongsl3 += 1;
+                                    }
+                                    else
+                                    {
+                                        tongHs2 += studentTr.Value;
+                                        tongsl2 += 1;
+                                    }
+                                }
+
+                                decimal tongket = (tongHs1 + tongHs2 * 2 + tongHs3 * 3) / (tongsl1 + tongsl2 * 2 + tongsl3 * 3);
+                            }
+                            <span>@tongket.ToString("0.##")</span>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <a class="text-center btn btn-primary btn-lg active mb-1" asp-action="IndexLayout" asp-controller="Home" asp-area="">
+                Trở về
+            </a>
+        </div>
+    </div>
+</section>
+}
+else
+{
+    <h4 class="text-center">Không có điểm nào cho học sinh này.</h4>
+}
+

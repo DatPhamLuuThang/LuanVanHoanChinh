@@ -1,0 +1,74 @@
+﻿@using Utilities
+@model IEnumerable<IdentityRole>
+@{
+    ViewData["Title"] = ViewContext.RouteData.Values["action"];
+    Layout = "~/Areas/Identity/Views/Shared/_Layouts.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <a class="btn btn-success" asp-area="Identity" asp-controller="Auth" asp-action="RegisterRole">
+            <i class="anticon anticon-plus-circle" data-toggle="tooltip" data-placement="top" title="Thêm quyền mới"></i>
+        </a>
+        <div class="m-t-25">
+
+            <table id="data-table" class="table">
+                <thead>
+                <tr>
+
+                    <th>Role</th>
+                    <th>Id</th>
+                    <th>Tools</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.Name</td>
+                        <td>@item.Id</td>
+
+                        <td class="text-center">
+
+                            <button type="button" class="btn btn-danger tone m-r-5" data-toggle="modal" data-target="#deleteRoleModal_@item.Id">
+                                <i class="anticon anticon-delete" data-toggle="tooltip" data-placement="top" title="Xóa quyền hệ thống"></i>
+                            </button>
+
+                            <div class="modal fade" id="deleteRoleModal_@item.Id">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Xác nhận xóa quyền</h5>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <i class="anticon anticon-close"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Quyền: @item.Name
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <div class="btn-group">
+                                                <a class="btn btn-secondary"
+                                                   asp-area="Identity"
+                                                   asp-controller="Auth"
+                                                   asp-action="DeleteRole"
+                                                   asp-route-idRole="@item.Id">
+                                                    <i class="anticon anticon-check-circle m-r-5"></i>Xác nhận
+                                                </a>
+                                                <i class="m-r-5"></i>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                    <i class="@Helper.FormatButton.Close.Icon"></i> @Helper.FormatButton.Close.Title
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

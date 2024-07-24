@@ -1,0 +1,108 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using SchoolManagement.Data.Identity
+
+@inject SignInManager<User> SignInManager
+
+<!-- Side Nav START -->
+<div class="side-nav">
+    <div class="side-nav-inner">
+        <ul class="side-nav-menu scrollable ps-container ps-theme-default ps-active-y" data-ps-id="363697b7-0b10-6612-7aad-a13363cf3f35">
+
+            @if (ViewBag.Menu != null)
+            {
+                foreach (Menu item in ViewBag.Menu)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="dropdown-toggle" href="javascript:void(0);">
+                            <span class="icon-holder">
+                                <i style="color: #0a53be" class="anticon anticon-folder"></i>
+                            </span>
+                            <span class="title">
+                                <u>
+                                    <b style="color: #0a53be">@item.Name</b>
+                                </u>
+                            </span>
+                    
+                        </a>
+                        <ul >
+                            @if (item.Child != null)
+                            {
+                                foreach (var child in item.Child
+                                    .Where(x => x.Id != item.Id && x.IsActive && x.Id != item.Id)
+                                    .OrderBy(x => x.Order)
+                                    .ThenBy(x => x.Name))
+                                {
+                                    <li>
+                                        <a class=" nav-link" asp-area="@child.Area" asp-controller="@child.Controller" asp-action="Index"
+                                           data-bs-toggle="tooltip"
+                                           data-bs-placement="top"
+                                           data-bs-title="@(string.IsNullOrEmpty(child.Description) ? "?" : child.Description)">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="icon-holder">
+                                                <i class="@child.Icon"></i>
+                                            </span>
+                                            <span class="title">@child.Name</span>
+                                        </a>
+                                    </li>
+                                }
+                            }
+
+                        </ul>
+                    </li>
+                }
+            }
+
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle">
+                    <span class="icon-holder">
+                        <i style="color: #0a53be" class="anticon anticon-dashboard"></i>
+                    </span>
+                    <span style="color: #0a53be" class="title"><b>HỆ THỐNG</b></span>
+                    <span class="arrow">
+                        <i class="arrow-icon"></i>
+                    </span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="nav-link d-flex align-items-center gap-2"
+                           asp-area=@ViewContext.RouteData.Values["area"] asp-controller="MenuManagement" asp-action="Index"
+                           data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="MenuManagement">
+                            <i class="anticon anticon-appstore m-r-5"></i>Menu
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link d-flex align-items-center gap-2"
+                           asp-area=@ViewContext.RouteData.Values["area"] asp-controller="Home" asp-action="Index">
+                            <i class="anticon anticon-setting m-r-5"></i>Settings
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" asp-area="Identity" asp-controller="Auth" asp-action="Logout">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-logout m-r-5"></i>
+                    </span>
+                    <span class="title">Đăng xuất</span>
+                </a>
+            </li>
+            <li class="nav-item dropdown open">
+                <a class="dropdown-toggle nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-undo"></i>
+                    </span>
+                    <span class="title">Trở về trang chủ</span>
+                </a>
+            </li>
+
+            <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+                <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+            </div>
+            <div class="ps-scrollbar-y-rail" style="top: 0px; height: 685px; right: 0px;">
+                <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 598px;"></div>
+            </div>
+        </ul>
+
+    </div>
+</div>
+<!-- Side Nav END -->

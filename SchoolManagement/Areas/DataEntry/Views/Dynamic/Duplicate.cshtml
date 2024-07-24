@@ -1,0 +1,27 @@
+﻿@using Utilities
+@model string
+
+@{
+    ViewData["Titles"] = "Xác nhận nhân bản";
+}
+<form asp-area=@ViewContext.RouteData.Values["area"] asp-controller=@ViewContext.RouteData.Values["controller"] asp-action="Duplicate" asp-route-id="@Model">
+    <div class="modal-dialog modal-dialog-scrollable modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">@ViewData["Titles"]</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắn chắn muốn nhân bản?
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-tone btn-primary">
+                    <i class="@Helper.FormatButton.Duplicate.Icon"></i> @Helper.FormatButton.Duplicate.Title
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="@Helper.FormatButton.Cancel.Icon"></i> @Helper.FormatButton.Cancel.Title
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

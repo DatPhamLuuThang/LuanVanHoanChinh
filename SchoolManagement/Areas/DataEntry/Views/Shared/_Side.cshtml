@@ -1,0 +1,61 @@
+﻿@using CoreEntities.SchoolMgntModel
+<!-- Side Nav START -->
+<div class="side-nav">
+    <div class="side-nav-inner">
+
+        @if (ViewBag.Menu != null)
+        {
+            foreach (Menu item in ViewBag.Menu)
+            {
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+                    <u>
+                        <b style="color: #0a53be">@item.Name</b>
+                    </u>
+                </h6>
+                <ul class="nav flex-column mb-auto">
+                    @if (item.Child != null)
+                    {
+                        foreach (var child in item.Child
+                            .Where(x => x.Id != item.Id && x.IsActive && x.Id != item.Id)
+                            .OrderBy(x => x.Order)
+                            .ThenBy(x => x.Name))
+                        {
+                            <li>
+                                <a class=" nav-link" asp-area="@child.Area" asp-controller="@child.Controller" asp-action="Index"
+                                   data-bs-toggle="tooltip"
+                                   data-bs-placement="top"
+                                   data-bs-title="@(string.IsNullOrEmpty(child.Description) ? "?" : child.Description)">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="icon-holder">
+                                        <i class="@child.Icon"></i>
+                                    </span>
+                                    <span class="title">@child.Name</span>
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            }
+        }
+        <ul class="side-nav-menu scrollable">
+            <li class="nav-item dropdown open">
+                <a class="dropdown-toggle nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="icon-holder">
+                        <i class="anticon anticon-undo"></i>
+                    </span>
+                    <span class="title">Trở về trang chủ</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-area="Identity" asp-controller="Auth" asp-action="Logout" class="dropdown-item d-block p-h-15 p-v-10">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <i class="anticon anticon-logout"></i>
+                            <span class="m-l-10">Đăng xuất</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- Side Nav END -->

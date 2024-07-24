@@ -1,0 +1,32 @@
+﻿@using Utilities
+@model CoreEntities.SchoolMgntModel.Teacher
+
+
+@{
+    ViewBag.Title = "Trang cá nhân";
+    Layout = "~/Views/Shared/_Layouts.cshtml";
+}
+
+<h2 class="small-title">Thông tin cá nhân</h2>
+
+<div class="h5 mb-0">@Model.FirstName @Model.LastName</div>
+<div class="text-muted">@Model.BirthDay.ToString(Helper.FormatDateTime.OnlyDate)</div>
+
+<span class="align-middle">
+    Giới tính:
+    @if (Model.Gender)
+    {
+        <span>Nam</span>
+    }
+    else
+    {
+        <span>Nữ</span>
+    }
+</span>
+<br/>
+<span class="align-middle">Số điện thoại: @Model.PhoneNumber</span><br/>
+<span class="align-middle">Email: @Model.Email</span><br/>
+<span class="align-middle">Trình độ: @Model.Qualification</span><br/>
+<span class="align-middle">Kinh nghiệm: @Model.Experience</span><br/>
+<span class="align-middle">Chuyên môn: @Model.Specialize</span><br/>
+<span class="align-middle">Địa chỉ: @Model.Address</span>

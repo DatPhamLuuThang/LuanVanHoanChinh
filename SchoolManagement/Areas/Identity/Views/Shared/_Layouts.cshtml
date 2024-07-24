@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/assets/images/logo/favicon.png" asp-append-version="true">
+
+    <!-- page css -->
+    <link href="~/assets/vendors/datatables/dataTables.bootstrap.min.css" rel="stylesheet" asp-append-version="true">
+
+    <!-- Core css -->
+    <link href="~/assets/css/app.min.css" rel="stylesheet" asp-append-version="true">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <div class="layout">
+
+        @await Html.PartialAsync("_Header")
+
+        @await Html.PartialAsync("_Side")
+
+
+        <div class="page-container">
+            <div class="main-content">
+              
+                    <div class="page-header">
+                        <h2 class="header-title">
+
+                            <nav class="breadcrumb breadcrumb-dash">
+                                <a class="link-body-emphasis fw-semibold text-decoration-none"
+                                   asp-area=@ViewContext.RouteData.Values["area"] asp-controller="Home" asp-action="Index">
+                                    @ViewContext.RouteData.Values["area"]
+                                </a>
+                                <i class="anticon anticon-double-right"></i>
+                                <a class="link-body-emphasis fw-semibold text-decoration-none"
+                                   asp-area=@ViewContext.RouteData.Values["area"] asp-controller="@ViewContext.RouteData.Values["Controller"]" asp-action="Index">
+                                    @ViewContext.RouteData.Values["Controller"]
+                                </a>
+                                <i class="anticon anticon-double-right"></i>
+                                <span class="breadcrumb-item active">@ViewContext.RouteData.Values["Action"]</span>
+                            </nav>
+                        </h2>
+
+
+                    </div>
+                    @RenderBody()
+               
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Core Vendors JS -->
+<script src="~/assets/js/vendors.min.js"></script>
+<script src="~/assets/vendors/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
+<script src="~/assets/vendors/datatables/dataTables.bootstrap.min.js" asp-append-version="true"></script>
+<script src="~/assets/vendors/chartjs/Chart.min.js" asp-append-version="true"></script>
+
+<!-- page js -->
+<script src="~/assets/js/pages/dashboard-default.js" asp-append-version="true"></script>
+<script src="~/assets/js/pages/datatables.js" asp-append-version="true"></script>
+
+<!-- Core JS -->
+<script src="~/assets/js/app.min.js" asp-append-version="true"></script>
+
+
+@await Component.InvokeAsync("Notyf")
+@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>
